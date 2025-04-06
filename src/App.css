@@ -60,3 +60,72 @@ h1{
   color: #ffffff;
   background-color: #073b8a;
 }
+
+/* 🔻 Mobile Devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .welcomecard-container {
+    width: 90% !important;
+    padding: 16px;
+  }
+
+  .welcomecard {
+    width: 100px;
+    height: 100px;
+  }
+
+  .welcomecard-name {
+    font-size: 1rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .size {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 95% !important;
+  }
+
+  .app {
+    margin-left: 0 !important;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+    padding: 10px;
+  }
+}
+
+/* 🔸 Tablets (max-width: 768px) */
+@media (max-width: 768px) {
+  .welcomecard-container {
+    width: 95%;
+  }
+
+  .welcomecard {
+    width: 120px;
+    height: 120px;
+  }
+
+  .welcomecard-name {
+    font-size: 1.2rem;
+  }
+
+  .button-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .size {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 90% !important;
+  }
+
+  .app {
+    margin-left: 0 !important;
+  }
+}
