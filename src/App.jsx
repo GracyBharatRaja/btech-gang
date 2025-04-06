@@ -1,25 +1,32 @@
-import { useState } from "react";
-import WelcomeCard from "./components/WelcomeCard";
+import { useState ,useEffect} from "react";
 import "./App.css";
+import WelcomeCard from "./components/WelcomeCard.jsx";
 
-function Like() {
-  const [count, setCount] = useState(0);
 
-  function handleClick() {
-    setCount(count + 1);
-  }
+function Like({ id }) {
+  const [count, setCount] = useState(() => {
+    const saved = localStorage.getItem(`like-${id}`);
+    return saved ? JSON.parse(saved) : 0;
+  });
 
-  return <button className="btn-color" onClick={handleClick}>👍 Like {count}</button>;
+  useEffect(() => {
+    localStorage.setItem(`like-${id}`, JSON.stringify(count));
+  }, [count, id]);
+
+  return <button onClick={() => setCount(count + 1)}>👍 Like {count}</button>;
 }
 
-function DisLike() {
-  const [count, setCount] = useState(0);
+function DisLike({ id }) {
+  const [count, setCount] = useState(() => {
+    const saved = localStorage.getItem(`dislike-${id}`);
+    return saved ? JSON.parse(saved) : 0;
+  });
 
-  function handleClick() {
-    setCount(count + 1);
-  }
+  useEffect(() => {
+    localStorage.setItem(`dislike-${id}`, JSON.stringify(count));
+  }, [count, id]);
 
-  return <button  className="btn-color" onClick={handleClick}>👎 Dislike {count}</button>;
+  return <button onClick={() => setCount(count + 1)}>👎 Dislike {count}</button>;
 }
 
 export default function App() {
@@ -83,7 +90,8 @@ export default function App() {
       {people.map((person, index) => (
         <div className="card-wrapper" key={index}>
           <WelcomeCard person={person} />
-          <Like />  <DisLike />
+          <Like id={person.imageId} />  <DisLike id={person.imageId} />
+           
           
         </div>
       ))}
