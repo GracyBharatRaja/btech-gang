@@ -1,0 +1,62 @@
+/* WelcomeCard.css */
+
+
+
+.welcomecard-container:hover {
+  transform: translateY(-4px);
+}
+
+.welcomecard {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 12px;
+}
+
+.welcomecard-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+
+
+.app {
+    width: 100%; 
+    margin-left: 250px;        
+  display: flex;                 
+  flex-direction: column;        
+  justify-content: center;       
+  align-items: center;           
+  background-color: #679def;     
+  padding: 20px;
+  text-align: center;
+}
+
+.size {
+  display: block;
+  width: 80%;
+  margin-left: 350px ; }
+h1{
+
+  color: white;
+  text-align: center;
+  background-color:#06357b;
+}
+.welcomecard-container {
+  width: 400px; 
+  margin: 20px auto; 
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+.btn-color{
+
+  color: #ffffff;
+  background-color: #073b8a;
+}
