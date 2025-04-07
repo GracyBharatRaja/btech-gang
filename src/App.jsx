@@ -1,32 +1,64 @@
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import WelcomeCard from "./components/WelcomeCard.jsx";
+import { db } from "./firebase-config.js"
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  setDoc,
+} from "firebase/firestore";
 
-
+// 🔥 Like component with Firestore
 function Like({ id }) {
-  const [count, setCount] = useState(() => {
-    const saved = localStorage.getItem(`like-${id}`);
-    return saved ? JSON.parse(saved) : 0;
-  });
+  const [count, setCount] = useState(0);
+  const docRef = doc(db, "likes", id);
 
   useEffect(() => {
-    localStorage.setItem(`like-${id}`, JSON.stringify(count));
-  }, [count, id]);
+    async function fetchLikes() {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setCount(docSnap.data().count || 0);
+      } else {
+        await setDoc(docRef, { count: 0 });
+      }
+    }
+    fetchLikes();
+  }, [id]);
 
-  return <button onClick={() => setCount(count + 1)}>👍 Like {count}</button>;
+  const handleClick = async () => {
+    const newCount = count + 1;
+    setCount(newCount);
+    await updateDoc(docRef, { count: newCount });
+  };
+
+  return <button onClick={handleClick}>👍 Like {count}</button>;
 }
 
+// 🔥 DisLike component with Firestore
 function DisLike({ id }) {
-  const [count, setCount] = useState(() => {
-    const saved = localStorage.getItem(`dislike-${id}`);
-    return saved ? JSON.parse(saved) : 0;
-  });
+  const [count, setCount] = useState(0);
+  const docRef = doc(db, "dislikes", id);
 
   useEffect(() => {
-    localStorage.setItem(`dislike-${id}`, JSON.stringify(count));
-  }, [count, id]);
+    async function fetchDislikes() {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setCount(docSnap.data().count || 0);
+      } else {
+        await setDoc(docRef, { count: 0 });
+      }
+    }
+    fetchDislikes();
+  }, [id]);
 
-  return <button onClick={() => setCount(count + 1)}>👎 Dislike {count}</button>;
+  const handleClick = async () => {
+    const newCount = count + 1;
+    setCount(newCount);
+    await updateDoc(docRef, { count: newCount });
+  };
+
+  return <button onClick={handleClick}>👎 Dislike {count}</button>;
 }
 
 export default function App() {
@@ -85,14 +117,14 @@ export default function App() {
 
   return (
     <div className="app">
-
       <h1>JNTU Sultanpur Gang</h1>
       {people.map((person, index) => (
         <div className="card-wrapper" key={index}>
           <WelcomeCard person={person} />
-          <Like id={person.imageId} />  <DisLike id={person.imageId} />
-           
-          
+          <div className="button-group">
+            <Like id={person.imageId} />  <DisLike id={person.imageId} />
+            
+          </div>
         </div>
       ))}
     </div>
